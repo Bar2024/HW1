@@ -2,7 +2,6 @@ public class State {
     static Board board;
     final Board WANTED_BOARD;
     static EnumDirection direction;
-    public String possibleAction[];
 
     /**
      * The constructor for Board.
@@ -27,11 +26,6 @@ public class State {
         return false;
     }
 
-    public String[] actions() {
-
-
-    }
-
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof State)) {
@@ -46,7 +40,26 @@ public class State {
         return board.hashCode();
     }
 
-    // change the next method according to the way the board is madee
+    public Action[] actions() {
+
+        Action[] possibleActions;
+        switch (direction) {
+            case UP:
+                // move glider up
+                break;
+            case DOWN:
+                // move glider down
+                break;
+            case LEFT:
+                // move glider left
+                break;
+            case RIGHT:
+                // move glider right
+                break;
+        }
+    }
+
+    // change the next method according to the way the board is made
     public Board result(Action action) {
         Tile tile = action.getTileAction();
         EnumDirection direction = action.getDirection();
