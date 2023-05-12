@@ -3,6 +3,7 @@ import java.lang.reflect.Array;
 public class State {
     static Board board;
     final Board WANTED_BOARD;
+    public String Action[];
 
     /**
      * The constructor for Board.
@@ -25,11 +26,13 @@ public class State {
         return false;
     }
 
-    public Array actions() {
+    public String[] actions() {
+
 
     }
 
     public State result(Action) {
+
 
     }
 
