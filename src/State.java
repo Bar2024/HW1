@@ -1,5 +1,11 @@
 public class State {
 
+    private Board board;
+
+    public Board getBoard() {
+        return board;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof State)) {

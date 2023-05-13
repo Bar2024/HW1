@@ -3,10 +3,15 @@
  */
 public class Tile {
 
-    static int value = 0;
+    private int value;
     public Tile(int num){
         value = num;
     }
+
+    public int getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Tile)) {
