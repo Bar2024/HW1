@@ -4,7 +4,7 @@ public class Board {
     private static int m;
     private static int n;
 
-    private Tile[][] gameBoard;
+    static Tile[][] gameBoard;
 
     public Board(String string){
         this.m = getRowsNum(string);
@@ -23,6 +23,21 @@ public class Board {
         }
     }
 
+    getTile(int num){
+        int[] helper = new arr[2];
+    }
+
+    f(Tile tile,int[] helper){
+        int []p1 = getTile(tile);
+        int []p2 = new arr[2];
+        p2[0] = p1[0] + helper[0];
+        p2[1] = p1[1] + helper[1];
+        Tile temp = gameBoard[p1[0]][p1[1]];
+        gameBoard[p1[0]][p1[1]] =  gameBoard[p2[0]][p2[1]];
+        gameBoard[p2[0]][p2[1]] = temp;
+    }
+
+
     public int[] emptyLocation(){
         int[] helper = new int[2];
         for(int i=0; i<m; i++){
@@ -35,6 +50,20 @@ public class Board {
         }
         return helper;
     }
+
+    public int[] findTile(Tile tile){
+        int[] helper = new int[2];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(gameBoard[i][j] == tile){
+                    helper[0] = i;
+                    helper[1] = j;
+                }
+            }
+        }
+        return helper;
+    }
+
 
     public static int getM() {
         return m;
@@ -99,6 +128,9 @@ public class Board {
         }
     }
 
+    public void swapTile(Tile move, Direction directionToMove){
+        int[] pointToMove2 = emptyLocation();
+    }
 
     // If you can make method that sort the current board, so it would be easier for me to check if the state of
     // the board is the same as the final wanted state.

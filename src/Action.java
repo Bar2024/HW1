@@ -1,13 +1,13 @@
 public class Action {
     static Tile tile;
-    static EnumDirection direction;
+    static Direction direction;
 
     /**
      * set the tile and the direction
      * @param tile the tile we eant to move
      * @param direction the direction we want this tile to move
      */
-    public Action(Tile tile, EnumDirection direction) {
+    public Action(Tile tile, Direction direction) {
         this.tile = tile;
         this.direction = direction;
     }
@@ -24,7 +24,7 @@ public class Action {
         return tile;
     }
 
-    public EnumDirection getDirection() {
+    public Direction getDirection() {
         return direction;
     }
 }

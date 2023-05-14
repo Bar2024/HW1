@@ -1,14 +1,14 @@
 public class State {
     static Board board;
-    final Board WANTED_BOARD;
-    static EnumDirection direction;
+    static Board WANTED_BOARD;
+    static Direction direction;
 
     /**
      * The constructor for Board.
      *
      * @param board The current state of the board
      */
-    public State(Board board, EnumDirection direction) {
+    public State(Board board, Direction direction) {
         this.board = board;
         WANTED_BOARD = board.getWantedBoard();
         this.direction = direction;
@@ -26,7 +26,6 @@ public class State {
         return false;
     }
 
-    private Board board;
 
     public Board getBoard() {
         return board;
@@ -68,23 +67,25 @@ public class State {
     // change the next method according to the way the board is made
     public Board result(Action action) {
         Tile tile = action.getTileAction();
-        EnumDirection direction = action.getDirection();
+        Direction direction = action.getDirection();
         // GET THE INDEX OF THE WANTED TILE
-        int n;
-        int m;
-        if (direction == EnumDirection.UP) {
-            board[n - 1][m] = board[n][m];
-            board[n][m] = "_";
-        } else if (direction == EnumDirection.DOWN) {
-            board[n + 1][m] = board[n][m];
-            board[n][m] = "_";
-        } else if (direction == EnumDirection.RIGHT) {
-            board[n][m + 1] = board[n][m];
-            board[n][m] = "_";
-        } else if (direction == EnumDirection.LEFT) {
-            board[n][m - 1] = board[n][m];
-            board[n][m] = "_";
+        int[] idxArray = new int[2];
+        int i;
+        int j;
+        if (direction == Direction.UP) {
+            idxArray[0] = -1;
+            idxArray[1] = 0;
+        } else if (direction == Direction.DOWN) {
+            idxArray[0] = 1;
+            idxArray[1] = 0;
+        } else if (direction == Direction.RIGHT) {
+            idxArray[0] = 0;
+            idxArray[1] = 1;
+        } else if (direction == Direction.LEFT) {
+            idxArray[0] = 0;
+            idxArray[1] = 1;
         }
+        Board.switchTiles(tile, idxArray);
         return board;
     }
 }
