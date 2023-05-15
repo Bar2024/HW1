@@ -46,24 +46,40 @@ public class State {
     }
 
     public Action[] actions() {
-
+        int[] actionArray ;
+        int[] idxArray = new int[2];
+        int i;
+        int j;
         Action[] possibleActions;
         switch (direction) {
             case UP:
                 idxArray[0] = -1;
                 idxArray[1] = 0;
+                if check(idxArray) {
+
+
+            }
                 break;
             case DOWN:
                 idxArray[0] = 1;
                 idxArray[1] = 0;
+                if check(idxArray) {
+                countLenghtArray += 1;
+            }
                 break;
             case LEFT:
                 idxArray[0] = 0;
                 idxArray[1] = 1;
+                if check(idxArray) {
+                countLenghtArray += 1;
+            }
                 break;
             case RIGHT:
                 idxArray[0] = 0;
                 idxArray[1] = 1;
+                if check(idxArray) {
+                countLenghtArray += 1;
+            }
                 break;
         }
     }
