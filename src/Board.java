@@ -63,8 +63,8 @@ public class Board {
         return findTileNumber1(value);
     }
 
+    // MAYBE CHANGE TO RETURN OBJECT? SO NO PROBLEMS WOULD ARISE?
     public Tile findTileNumber1(int num) {
-
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
                 if(tiles[i][j].getValue() == num)

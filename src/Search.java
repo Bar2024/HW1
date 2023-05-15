@@ -19,9 +19,9 @@ public class Search {
      * @return The root node used to search for a solution
      */
     private Node getRoot(String boardString) {
-        Board x = new Board(boardString);
-        State y = State(x);
-        Node(y);
+        Board startBoard = new Board(boardString);
+        State startState = new State(startBoard);
+        return new Node(startState);
 
     }
 

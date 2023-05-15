@@ -1,6 +1,6 @@
 public class State {
     static Board board;
-    static Board WANTED_BOARD;
+    static Tile[][] WANTED_BOARD;
     static Direction direction;
 
     public State(Board board) {
@@ -23,6 +23,7 @@ public class State {
      *
      * @return true if the both boards are equals, false otherwise
      */
+    // CHANGE THIS FUMCTION TO SEND THE WANTED BOARD TO BOARD CLASS TO CHECK FOR EQUALLS
     public boolean isGoal() {
         if (board.equals(WANTED_BOARD)) {
             return true;
@@ -75,30 +76,30 @@ public class State {
             case UP:
                 idxArray[0] = 1;
                 idxArray[1] = 0;
-                if (validMovement(idxArray) != null) {
-                    actionArray[0] = Action(validMovement(idxArray), direction);
+                if (board.validMovement(idxArray) != null) {
+                    actionArray[0] = new Action(board.validMovement(idxArray), direction);
                 }
             case DOWN:
                 idxArray[0] = -1;
                 idxArray[1] = 0;
-                if (validMovement(idxArray) != null) {
-                    actionArray[1] = Action(validMovement(idxArray), direction);
+                if (board.validMovement(idxArray) != null) {
+                    actionArray[1] = new Action(board.validMovement(idxArray), direction);
                 }
             case RIGHT:
                 idxArray[0] = 0;
                 idxArray[1] = -1;
-                if (validMovement(idxArray) != null) {
-                    actionArray[2] = Action(validMovement(idxArray), direction);
+                if (board.validMovement(idxArray) != null) {
+                    actionArray[2] = new Action(board.validMovement(idxArray), direction);
                 }
             case LEFT:
                 idxArray[0] = 0;
                 idxArray[1] = 1;
-                if (validMovement(idxArray) != null) {
-                    actionArray[3] = Action(validMovement(idxArray), direction);
+                if (board.validMovement(idxArray) != null) {
+                    actionArray[3] =new  Action(board.validMovement(idxArray), direction);
                 }
         }
 
-        makeActionArray(actionArray);
+        return makeActionArray(actionArray);
 
     }
 
@@ -121,7 +122,7 @@ public class State {
             idxArray[0] = 0;
             idxArray[1] = -1;
         }
-        Board.swapTiles(tile, idxArray);
+        board.swapTiles(tile, idxArray);
         return this;
     }
 }

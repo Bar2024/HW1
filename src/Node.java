@@ -37,6 +37,15 @@ public class Node {
         }
         return arr;
     }
+    public State getState() {
+        return state;
+    }
+    public Action getAction() {
+        return action;
+    }
+    public Node getParent() {
+        return parent;
+    }
 
 
 
