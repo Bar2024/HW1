@@ -50,16 +50,20 @@ public class State {
         Action[] possibleActions;
         switch (direction) {
             case UP:
-                // move glider up
+                idxArray[0] = -1;
+                idxArray[1] = 0;
                 break;
             case DOWN:
-                // move glider down
+                idxArray[0] = 1;
+                idxArray[1] = 0;
                 break;
             case LEFT:
-                // move glider left
+                idxArray[0] = 0;
+                idxArray[1] = 1;
                 break;
             case RIGHT:
-                // move glider right
+                idxArray[0] = 0;
+                idxArray[1] = 1;
                 break;
         }
     }
