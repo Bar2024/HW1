@@ -9,7 +9,7 @@ public class Node {
 
     private Node parent;
 
-    public Node(State state){ // This constructor is for the root only
+    public Node(State state) { // This constructor is for the root only
                                 // root parent = null
                                 // root action = null
         this.state = state;
@@ -24,7 +24,7 @@ public class Node {
     }
 
 
-    public Node[] expand(){
+    public Node[] expand() {
         Action[] possibleAction =  state.actions();
         int length = possibleAction.length;
         Node[] arr = new Node[length];

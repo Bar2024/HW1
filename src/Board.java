@@ -4,45 +4,86 @@ public class Board {
     private static int m;
     private static int n;
 
-    static Tile[][] gameBoard;
+    static Tile[][] tiles;
 
-    public Board(String string){
+    public Board(String string) {
         this.m = getRowsNum(string);
         this.n = getColsNum(string);
-        this.gameBoard = new Tile[m][n];
+        this.tiles = new Tile[m][n];
         initializeGameBoard(string);
     }
 
-    public Board(Board board){  // Calling in state.result()
-        this.gameBoard = new Tile[m][n];
+    public Board(Board board) {  // Calling in state.result()
+        this.tiles  = new Tile[m][n];
         Tile[][] board2 = board.getGameBoard();
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                gameBoard[i][j] = board2[i][j];
+                tiles [i][j] = board2[i][j];
             }
         }
     }
 
-    getTile(int num){
-        int[] helper = new arr[2];
-    }
-
-    f(Tile tile,int[] helper){
-        int []p1 = getTile(tile);
-        int []p2 = new arr[2];
+    public void swapTiles(Tile tile,int[] helper) {
+        int []p1 = findTile(tile);
+        int []p2 = new int[2];
         p2[0] = p1[0] + helper[0];
         p2[1] = p1[1] + helper[1];
-        Tile temp = gameBoard[p1[0]][p1[1]];
-        gameBoard[p1[0]][p1[1]] =  gameBoard[p2[0]][p2[1]];
-        gameBoard[p2[0]][p2[1]] = temp;
+        Tile temp = tiles [p1[0]][p1[1]];
+        tiles [p1[0]][p1[1]] =  tiles[p2[0]][p2[1]];
+        tiles [p2[0]][p2[1]] = temp;
     }
 
 
-    public int[] emptyLocation(){
+    public Tile[][] getWantedBoard() {
+        Tile[][] wantedTiles = new Tile[m][n];
+        int count = 1;
+        for(int i=0 ; i<m; i++) {
+            for(int j=0; j<n; j++) {
+                if(count == n*m)
+                    break;
+
+                wantedTiles[i][j] = new Tile(count);
+                count++;
+            }
+        }
+        return wantedTiles;
+    }
+
+    public Tile validMovement(int []coordination) {
+
+        int[] nullCoordination = emptyLocation();
+        int[] sumOfCoords = new int[2];
+        sumOfCoords[0] = coordination[0] + nullCoordination[0];
+        sumOfCoords[1] = coordination[1] + nullCoordination[1];
+
+        if (!(sumOfCoords[0] >= 0 && sumOfCoords[0] < m && sumOfCoords[1] >= 0 && sumOfCoords[1] < n))
+            return null;
+
+        int value = tiles[sumOfCoords[0]][sumOfCoords[1]].getValue();
+        return findTileNumber1(value);
+    }
+
+    public Tile findTileNumber1(int num) {
+
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(tiles[i][j].getValue() == num)
+                    return tiles[i][j];
+            }
+        }
+    }
+
+
+    // פונקציה היא מקבלת מערך של קורדניטה
+    // שמייצגת כיוון הפוך
+    // הפונקציה emptyLocation
+    // בדיקה בסכום בודק אם זה נמצא בתוך
+    // אם כן אני אחזיר את הטייל במקום הזה
+    public int[] emptyLocation() {
         int[] helper = new int[2];
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                if(gameBoard[i][j] == null){
+                if(tiles[i][j] == null){
                     helper[0] = i;
                     helper[1] = j;
                 }
@@ -51,11 +92,13 @@ public class Board {
         return helper;
     }
 
-    public int[] findTile(Tile tile){
+
+    // תבנה פונקציה שמקבלת
+    public int[] findTile(Tile tile) {
         int[] helper = new int[2];
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                if(gameBoard[i][j] == tile){
+                if(tiles[i][j] == tile){
                     helper[0] = i;
                     helper[1] = j;
                 }
@@ -73,8 +116,16 @@ public class Board {
         return n;
     }
 
-    public Tile[][] getGameBoard() {
-        return gameBoard;
+    public Tile[][] getGameBoard() { return tiles; }
+
+    /**
+     *
+     * @param string
+     * @return
+     */
+    public int getRowsNum (String string){
+        String[] everyRows = string.split("|");
+        return everyRows.length;
     }
 
     /**
@@ -82,36 +133,16 @@ public class Board {
      * @param string
      * @return
      */
-    public int getRowsNum(String string){
-        int rowCounter = 1;
-        for (char c : string.toCharArray()) {
-            if(c == '|')
-                rowCounter++;
-        }
-        return rowCounter;
-    }
-
-    /**
-     *
-     * @param string
-     * @return
-     */
-    public int getColsNum(String string){
-        int colCounter = 1;
-        for (char c : string.toCharArray()) {
-            if(c == '|')
-                break;
-            else if(c == ' ')
-                colCounter++;
-        }
-        return colCounter;
+    public int getColsNum (String string){
+        String[] everyRows = string.split("|");
+        return (everyRows[0].length() / 2) + 1;
     }
 
     /**
      *
      * @param string
      */
-    public void initializeGameBoard(String string){
+    public void initializeGameBoard (String string){
         int currRowIndex = 0;
         String[] everyRows = string.split("|");
 
@@ -121,7 +152,7 @@ public class Board {
 
             for(String t : currRow){
                 if(!t.equals("_"))
-                    this.gameBoard[currRowIndex][currColIndex] = new Tile(Integer.parseInt(t));
+                    this.tiles[currRowIndex][currColIndex] = new Tile(Integer.parseInt(t));
                 currColIndex++;
             }
             currRowIndex++;
