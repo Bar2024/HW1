@@ -3,6 +3,11 @@ public class State {
     static Board WANTED_BOARD;
     static Direction direction;
 
+    public State(Board board) {
+        this.board = board;
+        WANTED_BOARD = board.getWantedBoard();
+    }
+
     /**
      * The constructor for Board.
      *
@@ -10,7 +15,6 @@ public class State {
      */
     public State(Board board, Direction direction) {
         this.board = board;
-        WANTED_BOARD = board.getWantedBoard();
         this.direction = direction;
     }
 
@@ -45,33 +49,65 @@ public class State {
         return board.hashCode();
     }
 
-    public Action[] actions() {
+    public Action[] makeActionArray(Action[] actions) {
+        int count = 0;
+        for (int i = 0; i < actions.length; i++) {
+            if (actions[i] != null) {
+                    count += 1;
+            }
+        }
+        Action[] validActions = new Action[count];
+        int currentI = 0;
+        for (int i = 0; i < actions.length; i++) {
+            if (actions[i] != null) {
+                    validActions[currentI] = actions[i];
+                    currentI += 1;
+            }
+        }
+        return validActions;
+    }
 
-        Action[] possibleActions;
+    public Action[] actions() {
+        int[] idxArray = new int[2];
+        Action[] actionArray = new Action[4];
+
         switch (direction) {
             case UP:
-                // move glider up
-                break;
+                idxArray[0] = 1;
+                idxArray[1] = 0;
+                if (validMovement(idxArray) != null) {
+                    actionArray[0] = Action(validMovement(idxArray), direction);
+                }
             case DOWN:
-                // move glider down
-                break;
-            case LEFT:
-                // move glider left
-                break;
+                idxArray[0] = -1;
+                idxArray[1] = 0;
+                if (validMovement(idxArray) != null) {
+                    actionArray[1] = Action(validMovement(idxArray), direction);
+                }
             case RIGHT:
-                // move glider right
-                break;
+                idxArray[0] = 0;
+                idxArray[1] = -1;
+                if (validMovement(idxArray) != null) {
+                    actionArray[2] = Action(validMovement(idxArray), direction);
+                }
+            case LEFT:
+                idxArray[0] = 0;
+                idxArray[1] = 1;
+                if (validMovement(idxArray) != null) {
+                    actionArray[3] = Action(validMovement(idxArray), direction);
+                }
         }
+
+        makeActionArray(actionArray);
+
     }
 
     // change the next method according to the way the board is made
-    public Board result(Action action) {
+    public State result(Action action) {
         Tile tile = action.getTileAction();
         Direction direction = action.getDirection();
         // GET THE INDEX OF THE WANTED TILE
         int[] idxArray = new int[2];
-        int i;
-        int j;
         if (direction == Direction.UP) {
             idxArray[0] = -1;
             idxArray[1] = 0;
@@ -83,9 +119,9 @@ public class State {
             idxArray[1] = 1;
         } else if (direction == Direction.LEFT) {
             idxArray[0] = 0;
-            idxArray[1] = 1;
+            idxArray[1] = -1;
         }
-        Board.switchTiles(tile, idxArray);
-        return board;
+        Board.swapTiles(tile, idxArray);
+        return this;
     }
 }
