@@ -1,22 +1,13 @@
 public class State {
     static Board board;
     static Tile[][] WANTED_BOARD;
-    static Direction direction;
+    public Direction direction;
 
     public State(Board board) {
         this.board = board;
         WANTED_BOARD = board.getWantedBoard();
     }
 
-    /**
-     * The constructor for Board.
-     *
-     * @param board The current state of the board
-     */
-    public State(Board board, Direction direction) {
-        this.board = board;
-        this.direction = direction;
-    }
 
     /**
      * checks if the current state of the board is the wanted state
@@ -78,31 +69,30 @@ public class State {
     public Action[] actions() {
         int[] idxArray = new int[2];
         Action[] actionArray = new Action[4];
-
         switch (direction) {
             case UP:
                 idxArray[0] = 1;
                 idxArray[1] = 0;
                 if (board.validMovement(idxArray) != null) {
-                    actionArray[0] = new Action(board.validMovement(idxArray), direction);
+                    actionArray[0] = new Action(board.validMovement(idxArray), direction = Direction.UP);
                 }
             case DOWN:
                 idxArray[0] = -1;
                 idxArray[1] = 0;
                 if (board.validMovement(idxArray) != null) {
-                    actionArray[1] = new Action(board.validMovement(idxArray), direction);
+                    actionArray[1] = new Action(board.validMovement(idxArray), direction = Direction.DOWN);
                 }
             case RIGHT:
                 idxArray[0] = 0;
                 idxArray[1] = -1;
                 if (board.validMovement(idxArray) != null) {
-                    actionArray[2] = new Action(board.validMovement(idxArray), direction);
+                    actionArray[2] = new Action(board.validMovement(idxArray), direction = Direction.RIGHT);
                 }
             case LEFT:
                 idxArray[0] = 0;
                 idxArray[1] = 1;
                 if (board.validMovement(idxArray) != null) {
-                    actionArray[3] =new  Action(board.validMovement(idxArray), direction);
+                    actionArray[3] =new  Action(board.validMovement(idxArray), direction = Direction.LEFT);
                 }
         }
 
