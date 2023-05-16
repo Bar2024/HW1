@@ -1,22 +1,13 @@
 public class State {
     static Board board;
     static Tile[][] WANTED_BOARD;
-    static Direction direction;
+
 
     public State(Board board) {
         this.board = board;
         WANTED_BOARD = board.getWantedBoard();
     }
 
-    /**
-     * The constructor for Board.
-     *
-     * @param board The current state of the board
-     */
-    public State(Board board, Direction direction) {
-        this.board = board;
-        this.direction = direction;
-    }
 
     /**
      * checks if the current state of the board is the wanted state
@@ -78,37 +69,47 @@ public class State {
     public Action[] actions() {
         int[] idxArray = new int[2];
         Action[] actionArray = new Action[4];
-
-        switch (direction) {
-            case UP:
-                idxArray[0] = 1;
-                idxArray[1] = 0;
-                if (board.validMovement(idxArray) != null) {
-                    actionArray[0] = new Action(board.validMovement(idxArray), direction);
+            //case UP:
+        idxArray[0] = 1;
+        idxArray[1] = 0;
+        if (board.validMovement(idxArray) != null) {
+            actionArray[0] = new Action(board.validMovement(idxArray), Direction.UP);
                 }
-            case DOWN:
-                idxArray[0] = -1;
-                idxArray[1] = 0;
-                if (board.validMovement(idxArray) != null) {
-                    actionArray[1] = new Action(board.validMovement(idxArray), direction);
+            //case DOWN:
+        idxArray[0] = -1;
+        idxArray[1] = 0;
+        if (board.validMovement(idxArray) != null) {
+            actionArray[1] = new Action(board.validMovement(idxArray), Direction.DOWN);
                 }
-            case RIGHT:
-                idxArray[0] = 0;
-                idxArray[1] = -1;
-                if (board.validMovement(idxArray) != null) {
-                    actionArray[2] = new Action(board.validMovement(idxArray), direction);
+            //case RIGHT:
+        idxArray[0] = 0;
+        idxArray[1] = -1;
+        if (board.validMovement(idxArray) != null) {
+            actionArray[2] = new Action(board.validMovement(idxArray), Direction.RIGHT);
                 }
-            case LEFT:
-                idxArray[0] = 0;
-                idxArray[1] = 1;
-                if (board.validMovement(idxArray) != null) {
-                    actionArray[3] =new  Action(board.validMovement(idxArray), direction);
+            //case LEFT:
+        idxArray[0] = 0;
+        idxArray[1] = 1;
+        if (board.validMovement(idxArray) != null) {
+            actionArray[3] =new  Action(board.validMovement(idxArray), Direction.LEFT);
                 }
+        int count = 0;
+        for (int i = 0; i < actionArray.length; i++) {
+            if (actionArray[i] != null) {
+                count += 1;
+            }
+        }
+        Action[] validActions = new Action[count];
+        int currentI = 0;
+        for (int i = 0; i < actionArray.length; i++) {
+            if (actionArray[i] != null) {
+                validActions[currentI] = actionArray[i];
+                currentI += 1;
+            }
+        }
+        return validActions;
         }
 
-        return makeActionArray(actionArray);
-
-    }
 
     // change the next method according to the way the board is made
     public State result(Action action) {

@@ -4,7 +4,8 @@ public class Action {
 
     /**
      * set the tile and the direction
-     * @param tile the tile we eant to move
+     *
+     * @param tile      the tile we eant to move
      * @param direction the direction we want this tile to move
      */
     public Action(Tile tile, Direction direction) {
@@ -14,6 +15,7 @@ public class Action {
 
     /**
      * returns a string made from the tile and the direction
+     *
      * @return the tile and the direction we want to move
      */
     public String toString() {
