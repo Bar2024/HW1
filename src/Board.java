@@ -23,7 +23,14 @@ public class Board {
         }
     }
 
-    public void swapTiles(Tile tile,int[] helper) {
+
+    // p1 = Tile 5
+    // p2 = Empty
+
+    //temp = Tile 5
+    // במיקום של טייל 5 שמתי את EMpty
+    // במיקום של האמפטי שמתי את Tile 5
+    public void swapTiles(Tile tile, int[] helper) {
         int []p1 = findTile(tile);
         int []p2 = new int[2];
         p2[0] = p1[0] + helper[0];
@@ -67,7 +74,7 @@ public class Board {
     public Tile findTileNumber1(int num) {
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                if(tiles[i][j].getValue() == num)
+                if(tiles[i][j] != null && tiles[i][j].getValue() == num)
                     return tiles[i][j];
             }
         }
@@ -124,7 +131,7 @@ public class Board {
         if (!string.contains("|"))
             return 1;
 
-        String[] everyRows = string.split("|");
+        String[] everyRows = string.split("\\|");
         return everyRows.length;
     }
 
@@ -134,7 +141,7 @@ public class Board {
         if (!string.contains("|"))
             return string.length() / 2 + 1;
 
-        String[] everyRows = string.split("|");
+        String[] everyRows = string.split("\\|");
         return (everyRows[0].length() / 2) + 1;
     }
 
@@ -154,7 +161,7 @@ public class Board {
         // Case There is few rows
         else {
             int currRowIndex = 0;
-            String[] everyRows = string.split("|");
+            String[] everyRows = string.split("\\|");
             for (String s : everyRows) {
                 int currColIndex = 0;
                 String[] currRow = s.split(" ");
