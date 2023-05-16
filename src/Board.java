@@ -125,6 +125,15 @@ public class Board {
      * @return
      */
     public int getRowsNum (String string){
+        int flag = 0;
+        char []helper = string.toCharArray();
+        for (int i=0; i<helper.length; i++){
+            if(helper[i] == '|')
+                flag = 1;
+        }
+        if(flag == 0)
+            return 1;
+
         String[] everyRows = string.split("|");
         return everyRows.length;
     }
@@ -135,28 +144,50 @@ public class Board {
      * @return
      */
     public int getColsNum (String string){
-        String[] everyRows = string.split("|");
-        return (everyRows[0].length() / 2) + 1;
+        int flag = 0;
+        char []helper = string.toCharArray();
+        for (int i=0; i<helper.length; i++){
+            if(helper[i] == '|')
+                flag = 1;
+        }
+        if(flag == 1) {
+            String[] everyRows = string.split("|");
+            return (everyRows[0].length() / 2) + 1;
+        }
+        return helper.length/2 +1;
     }
 
     /**
      *
      * @param string
      */
-    public void initializeGameBoard (String string){
+    public void initializeGameBoard (String string) {
         int currRowIndex = 0;
-        String[] everyRows = string.split("|");
+        int rows = getM();
+        if (rows != 1) {
 
-        for (String s : everyRows){
-            int currColIndex = 0;
-            String[] currRow = s.split(" ");
+            String[] everyRows = string.split("|");
 
-            for(String t : currRow){
-                if(!t.equals("_"))
-                    this.tiles[currRowIndex][currColIndex] = new Tile(Integer.parseInt(t));
-                currColIndex++;
+            for (String s : everyRows) {
+                int currColIndex = 0;
+                String[] currRow = s.split(" ");
+
+                for (String t : currRow) {
+                    if (!t.equals("_"))
+                        this.tiles[currRowIndex][currColIndex] = new Tile(Integer.parseInt(t));
+                    currColIndex++;
+                }
+                currRowIndex++;
             }
-            currRowIndex++;
+        } else {
+            int curr = 0;
+            String[] currRow = string.split(" ");
+            for (String t : currRow) {
+                if (!t.equals("_")) {
+                    this.tiles[0][curr] = new Tile(Integer.parseInt(t));
+                }
+                curr++;
+            }
         }
     }
 
