@@ -119,77 +119,91 @@ public class Board {
 
     public Tile[][] getGameBoard() { return tiles; }
 
-    /**
-     *
-     * @param string
-     * @return
-     */
+
     public int getRowsNum (String string){
-        int flag = 0;
-        char []helper = string.toCharArray();
-        for (int i=0; i<helper.length; i++){
-            if(helper[i] == '|')
-                flag = 1;
-        }
-        if(flag == 0)
+        if (!string.contains("|"))
             return 1;
 
         String[] everyRows = string.split("|");
         return everyRows.length;
     }
 
-    /**
-     *
-     * @param string
-     * @return
-     */
+
+
     public int getColsNum (String string){
-        int flag = 0;
-        char []helper = string.toCharArray();
-        for (int i=0; i<helper.length; i++){
-            if(helper[i] == '|')
-                flag = 1;
-        }
-        if(flag == 1) {
-            String[] everyRows = string.split("|");
-            return (everyRows[0].length() / 2) + 1;
-        }
-        return helper.length/2 +1;
+        if (!string.contains("|"))
+            return string.length() / 2 + 1;
+
+        String[] everyRows = string.split("|");
+        return (everyRows[0].length() / 2) + 1;
     }
 
-    /**
-     *
-     * @param string
-     */
     public void initializeGameBoard (String string) {
-        int currRowIndex = 0;
-        int rows = getM();
-        if (rows != 1) {
+        // Case There is only 1 row
+        if (!string.contains("|")) {
+            int curr = 0;
+            String[] theOnlyRow = string.split(" ");
+            for (String s : theOnlyRow) {
+                if (!s.equals("_")) {
+                    this.tiles[0][curr] = new Tile(Integer.parseInt(s));
+                }
+                curr++;
+            }
+        }
 
+        // Case There is few rows
+        else {
+            int currRowIndex = 0;
             String[] everyRows = string.split("|");
-
             for (String s : everyRows) {
                 int currColIndex = 0;
                 String[] currRow = s.split(" ");
 
                 for (String t : currRow) {
-                    if (!t.equals("_"))
+                    if (!t.equals("_")) {
                         this.tiles[currRowIndex][currColIndex] = new Tile(Integer.parseInt(t));
+                    }
                     currColIndex++;
                 }
                 currRowIndex++;
             }
-        } else {
-            int curr = 0;
-            String[] currRow = string.split(" ");
-            for (String t : currRow) {
-                if (!t.equals("_")) {
-                    this.tiles[0][curr] = new Tile(Integer.parseInt(t));
-                }
-                curr++;
-            }
         }
     }
+
+
+
+
+
+
+//    public void initializeGameBoard (String string) {
+//        int currRowIndex = 0;
+//        int rows = getM();
+//        if (rows != 1) {
+//
+//            String[] everyRows = string.split("|");
+//
+//            for (String s : everyRows) {
+//                int currColIndex = 0;
+//                String[] currRow = s.split(" ");
+//
+//                for (String t : currRow) {
+//                    if (!t.equals("_"))
+//                        this.tiles[currRowIndex][currColIndex] = new Tile(Integer.parseInt(t));
+//                    currColIndex++;
+//                }
+//                currRowIndex++;
+//            }
+//        } else {
+//            int curr = 0;
+//            String[] currRow = string.split(" ");
+//            for (String t : currRow) {
+//                if (!t.equals("_")) {
+//                    this.tiles[0][curr] = new Tile(Integer.parseInt(t));
+//                }
+//                curr++;
+//            }
+//        }
+//    }
 
     public void swapTile(Tile move, Direction directionToMove){
         int[] pointToMove2 = emptyLocation();
