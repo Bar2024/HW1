@@ -71,6 +71,7 @@ public class Board {
                     return tiles[i][j];
             }
         }
+        return null;
     }
 
 

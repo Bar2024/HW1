@@ -25,10 +25,17 @@ public class State {
      */
     // CHANGE THIS FUMCTION TO SEND THE WANTED BOARD TO BOARD CLASS TO CHECK FOR EQUALLS
     public boolean isGoal() {
-        if (board.equals(WANTED_BOARD)) {
-            return true;
+        Tile[][] currentTiles = board.getGameBoard();
+        int rows = board.getM();
+        int columns = board.getN();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (currentTiles[i][j] != WANTED_BOARD[i][j]) {
+                    return false;
+                }
+            }
         }
-        return false;
+        return true;
     }
 
 

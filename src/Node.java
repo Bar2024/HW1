@@ -1,5 +1,3 @@
-import javax.swing.*;
-
 public class Node {
     private static int m;
     private static int n;
@@ -47,6 +45,8 @@ public class Node {
         return parent;
     }
 
-
-
+    // HEURISTICVALUE TO CHANGE
+    public static <U extends Comparable<? super U>, T> int heuristicValue(T t) {
+        return 0;
+    }
 }
