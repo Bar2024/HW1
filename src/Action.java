@@ -1,6 +1,6 @@
 public class Action {
-    static Tile tile;
-    static Direction direction;
+    private Tile tile;
+    private Direction direction;
 
     /**
      * set the tile and the direction

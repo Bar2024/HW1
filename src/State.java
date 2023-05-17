@@ -1,6 +1,6 @@
 public class State {
-    static Board board;
-    static Tile[][] WANTED_BOARD;
+    private Board board;
+    private Tile[][] WANTED_BOARD;
 
 
     public State(Board board) {
@@ -21,13 +21,20 @@ public class State {
         int columns = board.getN();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (currentTiles[i][j] != WANTED_BOARD[i][j]) {
+                if (WANTED_BOARD[i][j] == null && currentTiles[i][j] == null) {
+                    continue;
+                } else if ((currentTiles[i][j] != null && WANTED_BOARD[i][j] == null) || (WANTED_BOARD[i][j] != null && currentTiles[i][j] == null )) {
                     return false;
+                } else if (!currentTiles[i][j].equals(WANTED_BOARD[i][j])) {
+                    return false;
+
+                    }
                 }
             }
-        }
         return true;
-    }
+        }
+
+
 
 
     public Board getBoard() {
