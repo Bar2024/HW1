@@ -29,4 +29,12 @@ public class Action {
     public Direction getDirection() {
         return direction;
     }
+
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
 }

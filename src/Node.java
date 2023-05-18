@@ -27,12 +27,16 @@ public class Node {
         int length = possibleAction.length;
         Node[] arr = new Node[length];
         for(int i=0; i<length; i++){
-            Node currParent = this; // Because I am the parent of the future childs
+            // Because I am the parent of the future childs
             Action currAction = possibleAction[i];
             State currState = state.result(currAction); // State.result is what will happen if..
-            Node newNode = new Node(currState, currAction, currParent);
+            Node newNode = new Node(currState, currAction, this);
             arr[i] = newNode;
+            //TEST TEST TEST
+            System.out.println(newNode.getAction().toString());
+            System.out.println(newNode.getState().isGoal());
         }
+        System.out.println();
         return arr;
     }
     public State getState() {
@@ -46,7 +50,34 @@ public class Node {
     }
 
     // HEURISTICVALUE TO CHANGE
-    public static <U extends Comparable<? super U>, T> int heuristicValue(T t) {
-        return 0;
+    public int heuristicValue() {
+        int heuristicValue = 0;
+
+        // Calculate the heuristic value based on the parent state, current state, and action
+        // You can access the parent state, current state, and action using the instance variables
+
+        // Example: Calculate the heuristic value based on the number of tiles that are different between the current state and the goal state
+        Tile[][] currentTiles = state.getBoard().getGameBoard();
+        Tile[][] wantedTiles = state.getBoard().getWantedBoard();
+
+        int diffCount = 0;
+        int rows = Board.getM();
+        int columns = Board.getN();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (!currentTiles[i][j].equals(wantedTiles[i][j])) {
+                    diffCount++;
+                }
+            }
+        }
+
+        heuristicValue = diffCount;
+
+        return heuristicValue;
     }
+
+    // ...
 }
+
+

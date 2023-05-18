@@ -42,6 +42,8 @@ public class Search {
 
             while (!frontier.isEmpty()) {
                 Node node = frontier.remove();  // Get a node with smallest heuristic value
+                // TEST TEST TEST
+                System.out.println(node.getState().isGoal());
                 if (node.getState().isGoal()) {
                     result = extractSolution(node);  // Extracting the solution
                     status = Status.SOLVED;
@@ -54,8 +56,11 @@ public class Search {
                     if (!enqueued.contains(child.getState())) {  // Check for duplication
                         enqueued.add(child.getState());  // Mark the child as visited
                         frontier.add(child);
+                        // TEST TEST TEST
+                        //System.out.println(child.getAction().toString());
                     }
                 }
+                //System.out.println(frontier.peek().getAction().toString());
             }
             status = Status.UNSOLVABLE;  // Unsolvable board
         } catch (OutOfMemoryError err) {  // Out of memory - probably due to an explosion of the frontier

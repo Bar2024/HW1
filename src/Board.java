@@ -4,7 +4,7 @@ public class Board {
     private static int m;
     private static int n;
 
-    static Tile[][] tiles;
+    private Tile[][] tiles;
 
     public Board(String string) {
         this.m = getRowsNum(string);

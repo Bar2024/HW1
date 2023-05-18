@@ -5,7 +5,7 @@ public class State {
 
     public State(Board board) {
         this.board = board;
-        WANTED_BOARD = board.getWantedBoard();
+        this.WANTED_BOARD = board.getWantedBoard();
     }
 
 
@@ -17,13 +17,13 @@ public class State {
     // CHANGE THIS FUMCTION TO SEND THE WANTED BOARD TO BOARD CLASS TO CHECK FOR EQUALLS
     public boolean isGoal() {
         Tile[][] currentTiles = board.getGameBoard();
-        int rows = board.getM();
-        int columns = board.getN();
+        int rows = Board.getM();
+        int columns = Board.getN();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (WANTED_BOARD[i][j] == null && currentTiles[i][j] == null) {
-                    continue;
-                } else if ((currentTiles[i][j] != null && WANTED_BOARD[i][j] == null) || (WANTED_BOARD[i][j] != null && currentTiles[i][j] == null )) {
+
+                }else if ((currentTiles[i][j] != null && WANTED_BOARD[i][j] == null) || (WANTED_BOARD[i][j] != null && currentTiles[i][j] == null )) {
                     return false;
                 } else if (!currentTiles[i][j].equals(WANTED_BOARD[i][j])) {
                     return false;
@@ -32,8 +32,26 @@ public class State {
                 }
             }
         return true;
-        }
+    }
 
+    public int nearToGoal() {
+        Tile[][] currentTiles = board.getGameBoard();
+        int rows = Board.getM();
+        int columns = Board.getN();
+        int goal = rows * columns - 1;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (WANTED_BOARD[i][j] == null && currentTiles[i][j] == null) {
+
+                } else if ((currentTiles[i][j] != null && WANTED_BOARD[i][j] == null) || (WANTED_BOARD[i][j] != null && currentTiles[i][j] == null)) {
+
+                } else if (!currentTiles[i][j].equals(WANTED_BOARD[i][j])) {
+                    goal--;
+                }
+            }
+        }
+        return goal;
+    }
 
 
 
@@ -138,6 +156,9 @@ public class State {
             idxArray[1] = -1;
         }
         board.swapTiles(tile, idxArray);
+
+        action.setTile(tile);
+        action.setDirection(direction);
         return this;
     }
 }
