@@ -32,11 +32,7 @@ public class Node {
             State currState = state.result(currAction); // State.result is what will happen if..
             Node newNode = new Node(currState, currAction, this);
             arr[i] = newNode;
-            //TEST TEST TEST
-            System.out.println(newNode.getAction().toString());
-            System.out.println(newNode.getState().isGoal());
         }
-        System.out.println();
         return arr;
     }
     public State getState() {
@@ -57,7 +53,7 @@ public class Node {
         // You can access the parent state, current state, and action using the instance variables
 
         // Example: Calculate the heuristic value based on the number of tiles that are different between the current state and the goal state
-        Tile[][] currentTiles = state.getBoard().getGameBoard();
+        /**Tile[][] currentTiles = state.getBoard().getGameBoard();
         Tile[][] wantedTiles = state.getBoard().getWantedBoard();
 
         int diffCount = 0;
@@ -72,7 +68,7 @@ public class Node {
             }
         }
 
-        heuristicValue = diffCount;
+        heuristicValue = diffCount; **/
 
         return heuristicValue;
     }

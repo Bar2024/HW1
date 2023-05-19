@@ -1,11 +1,9 @@
 public class State {
     private Board board;
-    private Tile[][] WANTED_BOARD;
 
 
     public State(Board board) {
         this.board = board;
-        this.WANTED_BOARD = board.getWantedBoard();
     }
 
 
@@ -17,43 +15,25 @@ public class State {
     // CHANGE THIS FUMCTION TO SEND THE WANTED BOARD TO BOARD CLASS TO CHECK FOR EQUALLS
     public boolean isGoal() {
         Tile[][] currentTiles = board.getGameBoard();
+        Tile[][] WANTED_BOARD = board.getWantedBoard();
         int rows = Board.getM();
         int columns = Board.getN();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (WANTED_BOARD[i][j] == null && currentTiles[i][j] == null) {
-
-                }else if ((currentTiles[i][j] != null && WANTED_BOARD[i][j] == null) || (WANTED_BOARD[i][j] != null && currentTiles[i][j] == null )) {
-                    return false;
-                } else if (!currentTiles[i][j].equals(WANTED_BOARD[i][j])) {
-                    return false;
-
+                if (WANTED_BOARD[i][j] != null && currentTiles[i][j] != null) {
+                    int currentTile = currentTiles[i][j].getValue();
+                    int wantedTile = WANTED_BOARD[i][j].getValue();
+                    if (currentTile != wantedTile) {
+                        return false;
                     }
-                }
-            }
-        return true;
-    }
-
-    public int nearToGoal() {
-        Tile[][] currentTiles = board.getGameBoard();
-        int rows = Board.getM();
-        int columns = Board.getN();
-        int goal = rows * columns - 1;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (WANTED_BOARD[i][j] == null && currentTiles[i][j] == null) {
-
-                } else if ((currentTiles[i][j] != null && WANTED_BOARD[i][j] == null) || (WANTED_BOARD[i][j] != null && currentTiles[i][j] == null)) {
-
-                } else if (!currentTiles[i][j].equals(WANTED_BOARD[i][j])) {
-                    goal--;
+                } else if (WANTED_BOARD[i][j] == null ^ currentTiles[i][j] == null) {
+                    // One tile is null and the other is not
+                    return false;
                 }
             }
         }
-        return goal;
+        return true;
     }
-
-
 
     public Board getBoard() {
         return board;
@@ -155,10 +135,12 @@ public class State {
             idxArray[0] = 0;
             idxArray[1] = -1;
         }
-        board.swapTiles(tile, idxArray);
+        Board newBoard = new Board(board); // Create a copy of the current board
+        newBoard.swapTiles(tile, idxArray); // Modify the new board
 
         action.setTile(tile);
         action.setDirection(direction);
-        return this;
+
+        return new State(newBoard); // Return a new State object with the modified board
     }
 }

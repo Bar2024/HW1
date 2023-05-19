@@ -42,8 +42,6 @@ public class Search {
 
             while (!frontier.isEmpty()) {
                 Node node = frontier.remove();  // Get a node with smallest heuristic value
-                // TEST TEST TEST
-                System.out.println(node.getState().isGoal());
                 if (node.getState().isGoal()) {
                     result = extractSolution(node);  // Extracting the solution
                     status = Status.SOLVED;
