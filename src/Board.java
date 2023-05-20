@@ -65,9 +65,11 @@ public class Board {
 
         if (!(sumOfCoords[0] >= 0 && sumOfCoords[0] < m && sumOfCoords[1] >= 0 && sumOfCoords[1] < n))
             return null;
-
-        int value = tiles[sumOfCoords[0]][sumOfCoords[1]].getValue();
-        return findTileNumber1(value);
+        Tile wantedTile = tiles[sumOfCoords[0]][sumOfCoords[1]];
+        if (wantedTile != null) {
+            return findTileNumber1(wantedTile.getValue());
+        }
+        return null;
     }
 
     // MAYBE CHANGE TO RETURN OBJECT? SO NO PROBLEMS WOULD ARISE?
