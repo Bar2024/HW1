@@ -22,6 +22,8 @@ public class Board {
     public Board(String string) {
         this.m = getRowsNum(string);
         this.n = getColsNum(string);
+        System.out.println("rows are :" +m);
+        System.out.println("cols are :" +n);
         this.tiles = new Tile[m][n];
         initializeGameBoard(string);
     }
@@ -161,7 +163,8 @@ public class Board {
         }
 
         String[] everyRows = string.split("\\|");
-        return (everyRows[0].length() / 2) + 1;
+        String[] firstRow = everyRows[0].split(" ");
+        return firstRow.length;
     }
 
     public void initializeGameBoard (String string) {
