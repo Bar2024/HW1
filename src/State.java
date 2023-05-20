@@ -72,6 +72,9 @@ public class State {
     }
 
     public Action[] actions() {
+
+
+
         int[] idxArray = new int[2];
         Action[] actionArray = new Action[4];
             //case UP:

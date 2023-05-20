@@ -47,31 +47,37 @@ public class Node {
 
     // HEURISTICVALUE TO CHANGE
     public int heuristicValue() {
+
         int heuristicValue = 0;
 
-        // Calculate the heuristic value based on the parent state, current state, and action
-        // You can access the parent state, current state, and action using the instance variables
-
-        // Example: Calculate the heuristic value based on the number of tiles that are different between the current state and the goal state
-        /**Tile[][] currentTiles = state.getBoard().getGameBoard();
+        Tile[][] currentTiles = state.getBoard().getGameBoard();
         Tile[][] wantedTiles = state.getBoard().getWantedBoard();
 
-        int diffCount = 0;
-        int rows = Board.getM();
-        int columns = Board.getN();
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (!currentTiles[i][j].equals(wantedTiles[i][j])) {
-                    diffCount++;
+        for(int i=1; i< n*m; i++) {
+
+            int []helper1 = new int[2];
+            int []helper2 = new int[2];
+
+            for(int j=0; j<m; j++) {
+                for(int k=0; k<n; k++) {
+
+                    if(currentTiles[j][k] != null && currentTiles[j][k].getValue() == i){
+                        helper1[0] = j;
+                        helper1[1] = k;
+                    }
+                    if(wantedTiles[j][k] != null && wantedTiles[j][k].getValue() == i) {
+                        helper2[0] = j;
+                        helper2[1] = k;
+                    }
                 }
+                heuristicValue += (helper1[0] - helper2[0] > 0) ? helper1[0] - helper2[0] : helper2[0] - helper1[0];
+                heuristicValue += (helper1[1] - helper2[1] > 0) ? helper1[1] - helper2[1] : helper2[1] - helper1[1];
             }
         }
-
-        heuristicValue = diffCount; **/
-
         return heuristicValue;
     }
+
 
     // ...
 }

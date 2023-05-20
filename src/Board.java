@@ -1,10 +1,23 @@
 import java.util.Arrays;
 
 public class Board {
+
     private static int m;
     private static int n;
 
     private Tile[][] tiles;
+
+    public void printBoard(){
+        for(int i = 0; i<m ; i++){
+            for(int j=0; j<n; j++){
+                if(tiles[i][j] == null)
+                    System.out.print("_ ");
+                else
+                    System.out.print(tiles[i][j].getValue() + " ");
+            }
+            System.out.println();
+        }
+    }
 
     public Board(String string) {
         this.m = getRowsNum(string);
@@ -13,23 +26,16 @@ public class Board {
         initializeGameBoard(string);
     }
 
-    public Board(Board board) {  // Calling in state.result()
+    public Board(Board board) {
         this.tiles  = new Tile[m][n];
         Tile[][] board2 = board.getGameBoard();
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
-                tiles [i][j] = board2[i][j];
+                tiles[i][j] = board2[i][j];
             }
         }
     }
 
-
-    // p1 = Tile 5
-    // p2 = Empty
-
-    //temp = Tile 5
-    // במיקום של טייל 5 שמתי את EMpty
-    // במיקום של האמפטי שמתי את Tile 5
     public void swapTiles(Tile tile, int[] helper) {
         int []p1 = findTile(tile);
         int []p2 = new int[2];
@@ -101,7 +107,18 @@ public class Board {
     }
 
 
-    // תבנה פונקציה שמקבלת
+    public int[] findTile2(int num) {
+        int[] helper = new int[2];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++) {
+                if(tiles[i][j].getValue() == num) {
+                    helper[0] = i;
+                    helper[1] = j;
+                }
+            }
+        }
+        return helper;
+    }
     public int[] findTile(Tile tile) {
         int[] helper = new int[2];
         for(int i=0; i<m; i++){
@@ -138,8 +155,10 @@ public class Board {
 
 
     public int getColsNum (String string){
-        if (!string.contains("|"))
-            return string.length() / 2 + 1;
+        if (!string.contains("|")) {
+            String[] theOnlyRow = string.split(" ");
+            return theOnlyRow.length;
+        }
 
         String[] everyRows = string.split("\\|");
         return (everyRows[0].length() / 2) + 1;
@@ -156,6 +175,7 @@ public class Board {
                 }
                 curr++;
             }
+            printBoard();
         }
 
         // Case There is few rows
