@@ -1,13 +1,22 @@
 /**
- * This class is making a new tile, and set him a number.
+ * This class represents a sole tile on board, inside it has a value of the tile
  */
 public class Tile {
 
     private int value;
+
+    /**
+     * constructor of tile class
+     * @param num the value of the tile
+     */
     public Tile(int num){
         value = num;
     }
 
+    /**
+     * get the value of the tile
+     * @return value of the tile
+     */
     public int getValue() {
         return value;
     }

@@ -1,62 +1,26 @@
+/**
+ * this class represent the current state od the game, it stores inside the current board
+ */
 public class State {
     private Board board;
 
 
+    /**
+     * constructor of state
+     * @param board the current board of the game
+     */
     public State(Board board) {
         this.board = board;
     }
 
 
     /**
-     * checks if the current state of the board is the wanted state
+     * makes two matrix of tile[][], one for the current board and the second for the wanted board.
+     * checks between the two if the placement is the same
      *
      * @return true if the both boards are equals, false otherwise
      */
     // CHANGE THIS FUMCTION TO SEND THE WANTED BOARD TO BOARD CLASS TO CHECK FOR EQUALLS
-    public boolean isGoal1() {
-        Tile[][] currentTiles = board.getGameBoard();
-        Tile[][] WANTED_BOARD = board.getWantedBoard();
-        int rows = Board.getM();
-        int columns = Board.getN();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (WANTED_BOARD[i][j] != null && currentTiles[i][j] != null) {
-                    int currentTile = currentTiles[i][j].getValue();
-                    int wantedTile = WANTED_BOARD[i][j].getValue();
-                    if (currentTile != wantedTile) {
-                        return false;
-                    }
-                } else if (WANTED_BOARD[i][j] == null ^ currentTiles[i][j] == null) {
-                    // One tile is null and the other is not
-                    return false;
-                }
-            }
-        }
-        // TEST TEST TEST
-        System.out.println("we got the goal");
-        return true;
-    }
-
-    public boolean isGoal2() {
-        Tile[][] currentTiles = board.getGameBoard();
-        int rows = Board.getM();
-        int columns = Board.getN();
-        int count = 1;
-        do {
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
-                    if (currentTiles[i][j] != null) {
-                        if (currentTiles[i][j].getValue() != count) {
-                            return false;
-                        }
-                    }
-                    count += 1;
-                }
-            }
-        } while (count < (rows*columns-1));
-        return true;
-    }
-
     public boolean isGoal() {
         Tile[][] currentTiles = board.getGameBoard();
         Tile[][] WANTED_BOARD = board.getWantedBoard();
@@ -77,6 +41,10 @@ public class State {
     }
 
 
+    /**
+     * get the current state of the board
+     * @return current state of the board
+     */
     public Board getBoard() {
         return board;
     }
@@ -95,28 +63,12 @@ public class State {
         return board.hashCode();
     }
 
-    public Action[] makeActionArray(Action[] actions) {
-        int count = 0;
-        for (int i = 0; i < actions.length; i++) {
-            if (actions[i] != null) {
-                    count += 1;
-            }
-        }
-        Action[] validActions = new Action[count];
-        int currentI = 0;
-        for (int i = 0; i < actions.length; i++) {
-            if (actions[i] != null) {
-                    validActions[currentI] = actions[i];
-                    currentI += 1;
-            }
-        }
-        return validActions;
-    }
-
+    /**
+     * makes an array of actions. checks for each possible action if the movement is valid.
+     * after that makes a new array of possible actions without null values.
+     * @return an array of possible movement in board
+     */
     public Action[] actions() {
-
-
-
         int[] idxArray = new int[2];
         Action[] actionArray = new Action[4];
             //case UP:
@@ -161,11 +113,16 @@ public class State {
         }
 
 
-    // change the next method according to the way the board is made
+    /**
+     * get the action we want to make and modify the board accordingly.
+     * modify the direction of the action to indexes and send it with the tile to board class to make the changes.
+     * @param action the action we want to perform on the board
+     * @return a new state with the modified board
+     */
     public State result(Action action) {
         Tile tile = action.getTileAction();
         Direction direction = action.getDirection();
-        // GET THE INDEX OF THE WANTED TILE
+
         int[] idxArray = new int[2];
         if (direction == Direction.UP) {
             idxArray[0] = -1;
@@ -180,12 +137,14 @@ public class State {
             idxArray[0] = 0;
             idxArray[1] = -1;
         }
-        Board newBoard = new Board(board); // Create a copy of the current board
-        newBoard.swapTiles(tile, idxArray); // Modify the new board
+        /** create a new copy of the board and make the changes */
+        Board newBoard = new Board(board);
+        newBoard.swapTiles(tile, idxArray);
 
         action.setTile(tile);
         action.setDirection(direction);
 
-        return new State(newBoard); // Return a new State object with the modified board
+        /** return a new state with the changes */
+        return new State(newBoard);
     }
 }
