@@ -19,7 +19,7 @@ public class Action {
      * @return the tile and the direction we want to move
      */
     public String toString() {
-        return ("Move " + tile + " " + direction);
+        return ("Move " + tile.getValue() + " " + direction);
     }
 
     public Tile getTileAction() {

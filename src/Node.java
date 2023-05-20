@@ -47,39 +47,43 @@ public class Node {
 
     // HEURISTICVALUE TO CHANGE
     public int heuristicValue() {
-
         int heuristicValue = 0;
 
         Tile[][] currentTiles = state.getBoard().getGameBoard();
         Tile[][] wantedTiles = state.getBoard().getWantedBoard();
 
+        int rows = currentTiles.length;
+        int columns = currentTiles[0].length;
 
-        for(int i=1; i< n*m; i++) {
-
-            int []helper1 = new int[2];
-            int []helper2 = new int[2];
-
-            for(int j=0; j<m; j++) {
-                for(int k=0; k<n; k++) {
-
-                    if(currentTiles[j][k] != null && currentTiles[j][k].getValue() == i){
-                        helper1[0] = j;
-                        helper1[1] = k;
-                    }
-                    if(wantedTiles[j][k] != null && wantedTiles[j][k].getValue() == i) {
-                        helper2[0] = j;
-                        helper2[1] = k;
-                    }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Tile currentTile = currentTiles[i][j];
+                if (currentTile != null) {
+                    int value = currentTile.getValue();
+                    int[] desiredCoords = getDesiredCoordinates(value, wantedTiles);
+                    int rowDiff = Math.abs(desiredCoords[0] - i);
+                    int colDiff = Math.abs(desiredCoords[1] - j);
+                    heuristicValue += rowDiff + colDiff;
                 }
-                heuristicValue += (helper1[0] - helper2[0] > 0) ? helper1[0] - helper2[0] : helper2[0] - helper1[0];
-                heuristicValue += (helper1[1] - helper2[1] > 0) ? helper1[1] - helper2[1] : helper2[1] - helper1[1];
             }
         }
+
         return heuristicValue;
     }
 
+    private int[] getDesiredCoordinates(int value, Tile[][] wantedTiles) {
+        int rows = wantedTiles.length;
+        int cols = wantedTiles[0].length;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (wantedTiles[i][j] != null && wantedTiles[i][j].getValue() == value) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return null; // Desired coordinates not found for the given value
+    }
 
-    // ...
 }
 
 

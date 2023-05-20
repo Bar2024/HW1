@@ -13,7 +13,7 @@ public class State {
      * @return true if the both boards are equals, false otherwise
      */
     // CHANGE THIS FUMCTION TO SEND THE WANTED BOARD TO BOARD CLASS TO CHECK FOR EQUALLS
-    public boolean isGoal() {
+    public boolean isGoal1() {
         Tile[][] currentTiles = board.getGameBoard();
         Tile[][] WANTED_BOARD = board.getWantedBoard();
         int rows = Board.getM();
@@ -32,8 +32,50 @@ public class State {
                 }
             }
         }
+        // TEST TEST TEST
+        System.out.println("we got the goal");
         return true;
     }
+
+    public boolean isGoal2() {
+        Tile[][] currentTiles = board.getGameBoard();
+        int rows = Board.getM();
+        int columns = Board.getN();
+        int count = 1;
+        do {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    if (currentTiles[i][j] != null) {
+                        if (currentTiles[i][j].getValue() != count) {
+                            return false;
+                        }
+                    }
+                    count += 1;
+                }
+            }
+        } while (count < (rows*columns-1));
+        return true;
+    }
+
+    public boolean isGoal() {
+        Tile[][] currentTiles = board.getGameBoard();
+        Tile[][] WANTED_BOARD = board.getWantedBoard();
+        int rows = Board.getM();
+        int columns = Board.getN();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (WANTED_BOARD[i][j] == null && currentTiles[i][j] == null) {
+
+                }else if ((currentTiles[i][j] != null && WANTED_BOARD[i][j] == null) || (WANTED_BOARD[i][j] != null && currentTiles[i][j] == null )) {
+                    return false;
+                } else if (!currentTiles[i][j].equals(WANTED_BOARD[i][j])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     public Board getBoard() {
         return board;
