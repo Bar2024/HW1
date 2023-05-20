@@ -23,16 +23,17 @@ public class State {
     // CHANGE THIS FUMCTION TO SEND THE WANTED BOARD TO BOARD CLASS TO CHECK FOR EQUALLS
     public boolean isGoal() {
         Tile[][] currentTiles = board.getGameBoard();
-        Tile[][] WANTED_BOARD = board.getWantedBoard();
+        Tile[][] wantedBoard = board.getWantedBoard();
         int rows = Board.getM();
         int columns = Board.getN();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (WANTED_BOARD[i][j] == null && currentTiles[i][j] == null) {
+                if (wantedBoard[i][j] == null && currentTiles[i][j] == null) {
 
-                }else if ((currentTiles[i][j] != null && WANTED_BOARD[i][j] == null) || (WANTED_BOARD[i][j] != null && currentTiles[i][j] == null )) {
+                }else if ((currentTiles[i][j] != null && wantedBoard[i][j] == null) ||
+                        (wantedBoard[i][j] != null && currentTiles[i][j] == null )) {
                     return false;
-                } else if (!currentTiles[i][j].equals(WANTED_BOARD[i][j])) {
+                } else if (!currentTiles[i][j].equals(wantedBoard[i][j])) {
                     return false;
                 }
             }
