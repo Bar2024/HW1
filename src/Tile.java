@@ -9,7 +9,7 @@ public class Tile {
      * constructor of tile class
      * @param num the value of the tile
      */
-    public Tile(int num){
+    public Tile(int num) {
         value = num;
     }
 

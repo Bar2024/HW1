@@ -1,3 +1,7 @@
+/**
+ * the node class. it contains the sizes of the board, the parent state , the current state and the action we made
+ * to get from parent state to the current
+ */
 public class Node {
     private static int m;
     private static int n;
@@ -7,14 +11,22 @@ public class Node {
 
     private Node parent;
 
-    public Node(State state) { // This constructor is for the root only
-                                // root parent = null
-                                // root action = null
+    /**
+     * the constructor for the first node, without the parent state and the action
+     * @param state the current state of the game
+     */
+    public Node(State state) {
         this.state = state;
         this.m = state.getBoard().getM();
         this.n = state.getBoard().getN();
     }
 
+    /**
+     * the second constructor
+     * @param state the current state of the board
+     * @param action the last action we made
+     * @param parent the state before the action
+     */
     public Node(State state, Action action, Node parent) {
         this.state = state;
         this.action = action;
@@ -22,6 +34,10 @@ public class Node {
     }
 
 
+    /**
+     * expands the possible nodes of the game, by going on every possible action we get from the state class
+     * @return array of possible nodes to expand
+     */
     public Node[] expand() {
         Action[] possibleAction =  state.actions();
         int length = possibleAction.length;
@@ -35,17 +51,36 @@ public class Node {
         }
         return arr;
     }
+
+    /**
+     * gets the state
+     * @return the current state of the game
+     */
     public State getState() {
         return state;
     }
+
+    /**
+     * gets the action
+     * @return the action
+     */
     public Action getAction() {
         return action;
     }
+
+    /**
+     * get the parent state
+     * @return the parent state
+     */
     public Node getParent() {
         return parent;
     }
 
-    // HEURISTICVALUE TO CHANGE
+    /**
+     * calculate the difference of each tile between the current coordination on the board and the wanted coordination
+     * on the board
+     * @return The sum of the differences.
+     */
     public int heuristicValue() {
         int heuristicValue = 0;
 
@@ -61,8 +96,14 @@ public class Node {
                 if (currentTile != null) {
                     int value = currentTile.getValue();
                     int[] desiredCoords = getDesiredCoordinates(value, wantedTiles);
-                    int rowDiff = Math.abs(desiredCoords[0] - i);
-                    int colDiff = Math.abs(desiredCoords[1] - j);
+                    int rowDiff = desiredCoords[0] - i;
+                    int colDiff = desiredCoords[1] - j;
+                    if (rowDiff < 0) {
+                        rowDiff = -rowDiff;
+                    }
+                    if (colDiff < 0) {
+                        colDiff = -colDiff;
+                    }
                     heuristicValue += rowDiff + colDiff;
                 }
             }
@@ -71,6 +112,12 @@ public class Node {
         return heuristicValue;
     }
 
+    /**
+     * calculate the difference between the coordination of a tile in the current board and the wanted board
+     * @param value        the value of the tile to find the coordinates for.
+     * @param wantedTiles  the wanted state of the board.
+     * @return The wanted coordination of the tile as an array, or null otherwise.
+     */
     private int[] getDesiredCoordinates(int value, Tile[][] wantedTiles) {
         int rows = wantedTiles.length;
         int cols = wantedTiles[0].length;
@@ -81,8 +128,10 @@ public class Node {
                 }
             }
         }
-        return null; // Desired coordinates not found for the given value
+        /** cannot find the coordination */
+        return null;
     }
+
 
 }
 
